@@ -79,7 +79,7 @@ def generate_dataset(n: int) -> pd.DataFrame:
 
 
 def train():
-    print("🔧 Generating synthetic dataset...")
+    print("[*] Generating synthetic dataset...")
     df = generate_dataset(N_SAMPLES)
 
     features = ["hour", "lat", "lon", "crowd_density", "crime_score"]
@@ -90,7 +90,7 @@ def train():
         X, y, test_size=0.2, random_state=RANDOM_SEED, stratify=y
     )
 
-    print("🤖 Training Random Forest...")
+    print("[*] Training Random Forest...")
     model = RandomForestClassifier(
         n_estimators=150,
         max_depth=12,
@@ -101,12 +101,12 @@ def train():
     )
     model.fit(X_train, y_train)
 
-    print("\n📊 Classification Report:")
+    print("\n[*] Classification Report:")
     print(classification_report(y_test, model.predict(X_test),
                                 target_names=["Safe", "Moderate", "High Risk"]))
 
     joblib.dump(model, MODEL_PATH)
-    print(f"✅ Model saved to: {MODEL_PATH}")
+    print(f"[OK] Model saved to: {MODEL_PATH}")
     return model
 
 
